@@ -1,21 +1,22 @@
-import { Inter as FontSans } from "next/font/google"
-
-import { cn } from "@/lib/utils"
-import './globals.css'
-import { Metadata } from "next"
-import { ClerkProvider } from "@clerk/nextjs"
-import { dark } from "@clerk/themes"
-import Provider from "./Provider"
+import { Inter as FontSans } from "next/font/google";
+import { cn } from "@/lib/utils";
+import "./globals.css";
+import { Metadata } from "next";
+import { ClerkProvider } from "@clerk/nextjs";
+import { clerkClient } from "@clerk/nextjs/server";
+import { dark } from "@clerk/themes";
+import Provider from "./Provider";
+import ErrorBoundary from "../components/ErrorBoundary"; // Correct the path as necessary
 
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
-})
+});
 
 export const metadata: Metadata = {
-  title: 'LiveDocs',
-  description: 'Your go-to collaborative editor',
-}
+  title: "LiveDocs",
+  description: "Your go-to collaborative editor",
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -23,23 +24,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       appearance={{
         baseTheme: dark,
         variables: { 
-          colorPrimary: "#3371FF" ,
-          fontSize: '16px'
+          colorPrimary: "#3371FF",
+          fontSize: "16px",
         },
       }}
     >
       <html lang="en" suppressHydrationWarning>
-        <body
-          className={cn(
-            "min-h-screen font-sans antialiased",
-            fontSans.variable
-          )}
-        >
-          <Provider>
-            {children}
-          </Provider>
+        <body className={cn("min-h-screen font-sans antialiased", fontSans.variable)}>
+          <ErrorBoundary>
+            <Provider>
+              {children}
+            </Provider>
+          </ErrorBoundary>
         </body>
       </html>
     </ClerkProvider>
-  )
+  );
 }
