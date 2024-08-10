@@ -23,7 +23,6 @@ const Provider = ({ children }: { children: ReactNode}) => {
           currentUser: clerkUser?.emailAddresses[0].emailAddress!,
           text,
         })
-
         return roomUsers;
       }}
     >
@@ -33,5 +32,4 @@ const Provider = ({ children }: { children: ReactNode}) => {
     </LiveblocksProvider>
   )
 }
-
 export default Provider
